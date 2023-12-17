@@ -1,0 +1,120 @@
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-1BmE4kWBq78iYhFldvKuhfTAU6auU8tT94WrHftjDbrCEXSU1oBoqyl2QvZ6jIW3" crossorigin="anonymous">
+{% extends "shop_detail.html" %}
+{% load humanize %}
+{% block content %}
+<nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'shop:list' %}">&nbsp;&nbsp;&nbsp;LJM</a>    
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+<div class="collapse navbar-collapse flse-grow-0" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item ">                                                                
+            <li><a class="nav-link" href="#">&nbsp;&nbsp;OUTER</a></li>
+            <li><a class="nav-link" href="#">&nbsp;TOP</a></li>
+            <li><a class="nav-link" href="#">&nbsp;BOTTOM</a></li>               
+        </li> 
+    </ul>
+</div>
+<div class = "left-side" id="navbarNav">
+    <ul class="navbar-nav">
+        <li class="nav-item ">                                                                
+            <a class="nav-link" href="">CART</a>
+            <a class="nav-link" href="{% url 'account:login' %}">Sign In</a>
+            <a class="nav-link" href="{% url 'account:register' %}">Sign Up</a>            
+        </li>
+    </ul>
+</div>
+</nav>
+    {% if not cart_items %}
+        <div>
+            <div class="text-center">
+                <br>
+                <h1 class="text-center my_title">
+                    Your shopping cart is empty.
+                </h1>
+                <br>
+                <p class="text-center">
+                    Please click <a href="{% url 'shop:list' shop.id%}">here</a> to continue shopping.
+                </p>
+            </div>
+        </div>
+    {% else %}
+        <div>
+            <div class="text-center">
+                <br>
+                <h1 class="text-center my_title">
+                    CART
+                </h1>
+                <br>
+            </div>
+        </div>
+        <div  class="row mx-auto">
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                <table class="table my_custom_table">
+                    <thread class="my_custom_thread">
+                        <tr>
+                            <th colspan="5">
+                                Your items
+                            </th>
+                        </tr>
+                    </thread>
+                    <tbody>
+                    {% for cart_item in cart_items %}
+                        <tr>
+                            <td>
+                                <a href="{{cart_item.shop.get_url}}"><img src="{{cart_item.shop.image.url}}" alt="" class="float-left rounded custom_image"></a>
+                            </td>
+                            <td class="text-center">
+                                <br>
+                                <br>
+                                <br>
+                                <br>
+                                {{cart_item.shop.name}}
+                                <br>
+                                <br>
+                                price : {{cart_item.shop.price}}
+                                <br>
+                                <br>
+                                <br>
+                                Qty : {{cart_item.quantity}} X {{cart_item.shop.price}}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            <div class="col-12 col-sm-12 col-md-12 col-lg-6 text-center">
+                <table class="text my_custom_table">
+                    <thread class="my_custom_thread">
+                        <tr>
+                            <th colspan="5">
+                                <br>
+                                Checkout
+                                <br>
+                                <br>
+                                <br>
+                            </th>
+                        </tr>
+                    </thread>
+                    <tbody>                     
+                        <tr>
+                            <td class="text-center">
+                                Your total is : <strong>{{total}}</strong>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="text-center">
+                                <br>
+                                <br>
+                                <a href="{% url 'shop:list' %}" class="btn btn-secondary btn-block my_custom_button">Order now</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>                                
+            </div>
+        </div>
+    </div>     
+        {% endif %}
+{% endblock %}
